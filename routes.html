@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Route Search</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            padding: 14px 20px;
+            font-size: 18px;
+            margin: 0 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar a.active {
+            background-color: #0056b3;
+            font-weight: bold;
+        }
+
+        /* Container for Search */
+        .search-container {
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #searchInput {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Table Styles */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Mobile Responsiveness */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+
+            .search-container {
+                width: 90%;
+            }
+
+            #searchInput {
+                width: 80%;
+            }
+
+            table {
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="Home.html">Home</a>
+        <a class="active" href="routes.html">Routes</a>
+        <a href="trackbus.html">Bus track</a>
+        <a href="schedules.html">Schedules</a>
+    </div>
+
+    <!-- Search Input Section -->
+    <div class="search-container">
+        <h1>Bus Route Search</h1>
+        <label for="searchInput">Enter Bus Number:</label>
+        <input type="text" id="searchInput">
+        <button onclick="searchBus()">Search</button>
+    </div>
+
+    <!-- Bus Routes Table -->
+    <table border="1" id="busInfoTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Bus Number</th>
+                <th>Starting Point</th>
+                <th>Departure Time</th>
+                <th>Destination</th>
+            </tr>
+        </thead>
+        <tbody id="busInfo">
+            <!-- Bus information will be displayed here -->
+        </tbody>
+    </table>
+
+    <!-- Sub-Stops Table -->
+    <table border="1" id="subStopsTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Sub Stops</th>
+            </tr>
+        </thead>
+        <tbody id="subStopsInfo">
+            <!-- Sub stops information will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Bus routes data with sub-stops
+        const buses = [
+            {
+                "busNumber": "Bus 1",
+                "startingPoint": "School",
+                "departureTime": "08:00 AM",
+                "destination": "School",
+                "subStops": ["Kathruguppe", "GC road", "City centre Library"]
+            },
+            {
+                "busNumber": "Bus 2",
+                "startingPoint": "School",
+                "departureTime": "09:30 AM",
+                "destination": "School",
+                "subStops": ["BC circle", "Hostel", "Kote"]
+            },
+            {
+                "busNumber": "Bus 3",
+                "startingPoint": "School",
+                "departureTime": "10:00 AM",
+                "destination": "school",
+                "subStops": ["River Road", "Old Town ", "Techer's Colony"]
+            }
+        ];
+
+        // Function to search for bus by bus number
+        function searchBus() {
+            const input = document.getElementById("searchInput").value.trim();
+            const busInfoTable = document.getElementById("busInfoTable");
+            const subStopsTable = document.getElementById("subStopsTable");
+            const busInfo = document.getElementById("busInfo");
+            const subStopsInfo = document.getElementById("subStopsInfo");
+
+            let busFound = false;
+
+            // Clear previous search results
+            busInfo.innerHTML = "";
+            subStopsInfo.innerHTML = "";
+
+            // Validate user input
+            if (!input) {
+                alert("Please enter a bus number.");
+                return;
+            }
+
+            // Search for the bus in the list
+            buses.forEach(bus => {
+                if (bus.busNumber.toLowerCase() === input.toLowerCase()) {
+                    busFound = true;
+
+                    // Populate the main bus route table
+                    const newRow = busInfo.insertRow();
+                    newRow.insertCell(0).innerText = bus.busNumber;
+                    newRow.insertCell(1).innerText = bus.startingPoint;
+                    newRow.insertCell(2).innerText = bus.departureTime;
+                    newRow.insertCell(3).innerText = bus.destination;
+
+                    // Populate the sub-stops table
+                    bus.subStops.forEach(stop => {
+                        const stopRow = subStopsInfo.insertRow();
+                        stopRow.insertCell(0).innerText = stop;
+                    });
+                }
+            });
+
+            // Show or hide the tables based on search result
+            if (busFound) {
+                busInfoTable.style.display = "table";
+                subStopsTable.style.display = "table";
+            } else {
+                busInfoTable.style.display = "none";
+                subStopsTable.style.display = "none";
+                alert("Bus not found");
+            }
+
+            // Clear the input field after search
+            document.getElementById("searchInput").value = "";
+        }
+    </script>
+
+</body>
+
+</html>

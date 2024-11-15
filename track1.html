@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4ff;
+        }
+
+        .geo-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .geo-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .geo-btn:active {
+            transform: scale(0.95);
+        }
+
+        .showDetails {
+            font-size: 18px;
+            color: #333;
+            background-color: #e9f0ff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        body{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background: url(https://drive.google.com/uc?export=view&id=14lUOc-HCBJdbNXwshS0oJ_KQqEgQYxEY) no-repeat;
+	
+	background-size: cover;
+	
+}
+.bg{
+	width: 30%;
+	margin-left:35%;
+	margin-right:25%;
+	margin-top: 8%;
+	margin-bottom: 7%;
+	background-color: rgba(210, 210, 210, 0.685);
+	
+	filter: blur(6px);
+	height: 362.2px;
+	position:sticky;
+	display:block;
+	z-index: 0;
+}
+.box{
+	width: 300px;
+	padding: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	z-index: 1;
+	text-align: center;
+}
+
+
+.box h1{
+	color: white;
+	text-transform: uppercase;
+	z-index: 10;
+	font-weight: 500;
+	
+}
+
+.box input[type = "text"],.box input[type = "password"]{
+	z-index: 10;
+	border: 0;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px  solid #3498db;
+	padding: 14px 10px;
+	width: 200px;
+	outline: none;
+	color: white;
+	border-radius: 24px;
+	transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+	width: 280px;
+	border-color: #2ecc71;
+}
+
+.box input[type = "submit"]{
+	border: 0;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px  solid #2ecc71;
+	padding: 14px 40px;
+	width: 200px;
+	outline: none;
+	color: white;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+}
+
+.box input[type = "submit"]:hover{
+	background: #2ecc71;
+}
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+	<center>
+        <form class="box" method="post">
+            <h1> Parents Login</h1>
+            <input type="text" name="" placeholder="user name">
+            <input type="password" name="" placeholder="password">
+            <input type="submit" name="" value="Login">
+    
+        </form>
+    
+    </center>
+    <button class="geo-btn">Show User Location</button>
+    <p class="showDetails">User location details will appear here.</p>
+
+    <script>
+        const showDetails = document.querySelector(".showDetails");
+
+        document.querySelector(".geo-btn").addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        showDetails.textContent = `The latitude is ${latitude.toFixed(4)} & longitude is ${longitude.toFixed(4)}`;
+                    },
+                    (error) => {
+                        showDetails.textContent = `Error: ${error.message}`;
+                        console.error(error.message);
+                    }
+                );
+            } else {
+                showDetails.textContent = "Geolocation is not supported by your browser.";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Tracking System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        nav { /* Change background color to blue */
+            padding: 15px; /* Increase padding for a larger navbar */
+        }
+        .navbar {
+            list-style-type: none; /* Remove bullets */
+            padding: 0; /* Remove default padding */
+            display: flex; /* Use flexbox for horizontal layout */
+            justify-content: center; /* Center the nav items */
+        }
+        .navbar li {
+            margin: 0 15px; /* Space between nav items */
+        }
+        .navbar a {
+            text-decoration: none; /* Remove underline from links */
+            color: white; /* Change link color to white for better contrast */
+            font-size: 18px; /* Increase font size for better visibility */
+        }
+        .navbar a.active {
+            font-weight: bold; /* Highlight active link */
+            color: #FFD700; /* Change active link color to gold */
+        }
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #f1c40f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        display: none;
+    }
+
+    .navbar.active .nav-links {
+        display: flex;
+    }
+}
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    color: black;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: white;
+    color: black;
+}
+
+.navbar a.active {
+    background-color: grey;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="routes.html">Routes</a></li>
+            <li><a href="trackbus.html">Track Bus</a></li>
+            <li><a class="active" href="schedules.html">Schedules</a></li>
+        </ul>
+    </nav>
+
+    <h1>Bus Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Bus Number</th>
+                <th>Route</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Downtown - Central Park</td>
+                <td>08:00 AM</td>
+                <td>08:30 AM</td>
+                <td>On Time</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Central Park - City Mall</td>
+                <td>09:00 AM</td>
+                <td>09:30 AM</td>
+                <td>Delayed</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>City Mall - Airport</td>
+                <td>10:00 AM</td>
+                <td>10:45 AM</td>
+                <td>On Time</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Airport - Downtown</td>
+                <td>11:00 AM</td>
+                <td>11:30 AM</td>
+                <td>Cancelled</td>
+            </tr>
+            <tr>
+                <td>105</td>
+                <td>Central Station - University</td>
+                <td>12:00 PM</td>
+                <td>12:30 PM</td>
+                <td>On Time</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
